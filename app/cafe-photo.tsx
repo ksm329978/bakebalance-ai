@@ -1,0 +1,1 @@
+export default function CafePhoto(){return <div className="cafe-composite"><img className="cafe-base" src="/photos/ipop-counter-restored.png" alt="이팝청춘 매장, 학생창업동아리 칠판과 크루아상 장식"/><img className="dessert-original" src="/photos/dessert-original.png" alt="원본 디저트 메뉴판: 메뉴명과 가격 그대로"/></div>}

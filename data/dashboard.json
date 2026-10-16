@@ -2,12 +2,67 @@
   "storeName": "이팝청춘 2호점",
   "date": "2026-10-14",
   "isMock": true,
-  "totals": { "produced": 240, "sold": 218, "waste": 12, "remaining": 10 },
+  "totals": {
+    "produced": 240,
+    "sold": 218,
+    "waste": 12,
+    "remaining": 10
+  },
   "recent": [
-    { "id": 1, "name": "소금빵", "produced": 80, "sold": 76, "waste": 2, "remaining": 2, "planned": 80, "reason": "판매 흐름 유지", "status": "계획 예시" },
-    { "id": 2, "name": "크루아상", "produced": 50, "sold": 44, "waste": 4, "remaining": 2, "planned": 45, "reason": "잔량 확인 후 소량 조정", "status": "계획 예시" },
-    { "id": 3, "name": "단팥빵", "produced": 40, "sold": 38, "waste": 1, "remaining": 1, "planned": 40, "reason": "현재 생산량 유지", "status": "계획 예시" },
-    { "id": 4, "name": "모카번", "produced": 40, "sold": 34, "waste": 3, "remaining": 3, "planned": 35, "reason": "폐기와 잔량 확인", "status": "계획 예시" },
-    { "id": 5, "name": "통밀쿠키", "produced": 30, "sold": 26, "waste": 2, "remaining": 2, "planned": 30, "reason": "판매 흐름 관찰", "status": "계획 예시" }
+    {
+      "id": 1,
+      "name": "쿠키",
+      "produced": 80,
+      "sold": 76,
+      "waste": 2,
+      "remaining": 2,
+      "planned": 80,
+      "reason": "판매 흐름 유지",
+      "status": "계획 예시"
+    },
+    {
+      "id": 2,
+      "name": "베이글",
+      "produced": 50,
+      "sold": 44,
+      "waste": 4,
+      "remaining": 2,
+      "planned": 45,
+      "reason": "잔량 확인 후 소량 조정",
+      "status": "계획 예시"
+    },
+    {
+      "id": 3,
+      "name": "휘낭시에",
+      "produced": 40,
+      "sold": 38,
+      "waste": 1,
+      "remaining": 1,
+      "planned": 40,
+      "reason": "현재 생산량 유지",
+      "status": "계획 예시"
+    },
+    {
+      "id": 4,
+      "name": "레몬 마들렌",
+      "produced": 40,
+      "sold": 34,
+      "waste": 3,
+      "remaining": 3,
+      "planned": 35,
+      "reason": "폐기와 잔량 확인",
+      "status": "계획 예시"
+    },
+    {
+      "id": 5,
+      "name": "초코 마들렌",
+      "produced": 30,
+      "sold": 26,
+      "waste": 2,
+      "remaining": 2,
+      "planned": 30,
+      "reason": "판매 흐름 관찰",
+      "status": "계획 예시"
+    }
   ]
 }

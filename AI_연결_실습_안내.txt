@@ -1,0 +1,40 @@
+BakeBalance AI 연결 실습 안내
+
+1. 이 압축파일을 풀어 주세요.
+2. GitHub bakebalance-ai 저장소 첫 화면에서 Add file → Upload files를 누르세요.
+3. 압축을 푼 폴더 안의 app 폴더를 업로드하세요. 바깥 bakebalance-ai-main 폴더가 아니라 app 폴더입니다.
+   변경 파일: app/page.tsx, app/globals.css
+   새 파일: app/ai-analysis.tsx, app/api/analyze/route.ts
+   app 폴더 전체를 올려도 기존 기능을 포함합니다.
+4. Commit changes로 저장하고 Vercel의 배포 완료를 기다리세요.
+5. Vercel → bakebalance-ai 프로젝트 → Settings → Environment Variables에서 추가하세요.
+   Key(이름): GEMINI_API_KEY
+   Value(값): Google AI Studio에서 복사한 실제 키
+   환경: Production (미리보기에서도 쓰려면 Preview도 선택)
+   Save 클릭. API 키는 GitHub 파일이나 채팅에 넣지 마세요.
+6. Deployments → 최신 배포의 메뉴 → Redeploy로 재배포하세요.
+   기본 모델: gemini-3.8-flash
+   모델 변경이 필요한 경우 GEMINI_MODEL 환경 변수를 추가하고 재배포하세요.
+7. https://bakebalance-ai.vercel.app 에서 홈 대시보드의 AI 운영 분석을 찾으세요.
+   수업 실습용 MOCK 데이터 → AI 분석하기 → 실제 Gemini 응답 확인.
+   현재 대시보드 데이터 선택 시 현재 브라우저의 기록(없으면 예시 데이터)을 분석합니다.
+8. 휴대폰 브라우저에서 같은 주소를 열고 AI 분석하기를 눌러 확인하세요.
+   PC와 휴대폰은 같은 가상 데이터를 볼 수 있습니다.
+   일일 기록·설정·재고와 AI 분석 결과는 기기 사이에 자동 동기화되지 않습니다.
+   기존 일일 기록은 각 브라우저 저장 방식이며 AI 결과는 현재 화면에 표시됩니다.
+
+변경 내용
+- 홈 대시보드에 Gemini 분석 버튼·로딩·오류·실제 응답·분석 시각 표시.
+- 서버 API에서 키를 사용하고 화면 코드에 키를 포함하지 않음.
+- 가상 데이터와 현재 화면 데이터 선택 지원.
+- 수량 검사 및 입력 길이 제한. 한 번의 클릭에 한 번만 요청.
+- 하루 자료만으로 추세나 매출·이익·재료 발주량을 지어내지 않도록 지시.
+- 휴대폰에서 분석 영역을 세로로 배치.
+
+검증
+- Next.js 배포용 빌드와 TypeScript 검사 통과.
+- 모바일 CSS 반영. 실행 환경에 브라우저가 없어 모바일 시각 검사는 미완료.
+- API 분기 검사: 키 없음, 정상 응답(모의 Gemini 응답), 데이터 오류,
+  다른 출처 요청, 한도 초과, 빈 결과, 네트워크 오류.
+- 실제 API 키를 받지 않았으므로 Gemini 실호출은 배포 후 확인해야 합니다.
+- 공개 수업용 프로토타입입니다. 로그인·사용자별 할당량·공유 DB는 추가하지 않았습니다.

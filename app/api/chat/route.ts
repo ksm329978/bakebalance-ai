@@ -68,5 +68,14 @@ if (!r.ok) {
  const answer=(result.candidates?.[0]?.content?.parts||[]).filter((p:any)=>!p.thought&&typeof p.text==='string').map((p:any)=>p.text).join('\n').trim();
  if(!answer)return reply({error:'AI 답변이 비어 있습니다. 다시 질문해 주세요.'},502);
  return reply({answer,source:'Supabase 저장 자료',retrievedAt:evidence.조회시각,ingredientCount:materials.length,recordCount:records.length});
- }catch{return reply({error:'AI 응답 시간이 초과되었거나 연결이 끊겼습니다. 다시 시도해 주세요.'},504);}
-}
+} catch (error) {
+ const name = error instanceof Error ? error.name : 'UnknownError';
+
+ if (name === 'TimeoutError' || name === 'AbortError') {
+  return reply({error:'Google AI가 45초 안에 답하지 못했습니다. (AI_TIMEOUT)'},504);
+ }
+
+ return reply({
+  error:'AI 응답 처리 중 오류가 발생했습니다. (' + name + ')'
+ },502);
+}}

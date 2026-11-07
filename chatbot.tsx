@@ -1,0 +1,13 @@
+'use client';
+import {useState,useRef,useEffect, type FormEvent} from 'react';
+type Message={role:'user'|'model';text:string;source?:string};
+export default function Chatbot(){
+ const [open,setOpen]=useState(false),[question,setQuestion]=useState(''),[messages,setMessages]=useState<Message[]>([]),[busy,setBusy]=useState(false),[error,setError]=useState('');
+ const end=useRef<HTMLDivElement>(null);
+ useEffect(()=>{end.current?.scrollIntoView({block:'nearest'});},[messages,busy]);
+ async function send(e:FormEvent){e.preventDefault();const q=question.trim();if(!q||busy)return;setBusy(true);setError('');
+ const previous=messages.slice(-6);setMessages([...messages,{role:'user',text:q}]);setQuestion('');
+ try{const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question:q,history:previous.map(({role,text})=>({role,text}))}),signal:AbortSignal.timeout(60000)});const data=await r.json();if(!r.ok)throw Error(data.error||'답변을 받지 못했습니다.');setMessages(m=>[...m,{role:'model',text:data.answer,source:`${data.source} · 재료 ${data.ingredientCount}종 · 기록 ${data.recordCount}행 · ${new Date(data.retrievedAt).toLocaleString('ko-KR')}`}]);}
+ catch(err){setError(err instanceof Error?err.message:'연결에 실패했습니다.');setQuestion(q);setMessages(m=>m.slice(0,-1));}finally{setBusy(false);}}
+ return <div className="bb-chat"><button className="primary-btn bb-chat-toggle" aria-expanded={open} aria-controls="bb-chat-panel" onClick={()=>setOpen(!open)}>{open?'챗봇 닫기':'💬 운영 챗봇'}</button>{open&&<section id="bb-chat-panel" className="bb-chat-panel" aria-label="이팝청춘 운영 챗봇"><h2>이팝청춘 운영 챗봇</h2><p>저장된 재고·생산 기록을 찾아 답해요. 미저장 변경은 반영되지 않아요.</p><div className="bb-chat-log" role="log" aria-live="polite">{!messages.length&&<p>“우유 재고 확인해 줘”, “최근 폐기 기록을 알려줘”처럼 질문해 보세요.</p>}{messages.map((m,i)=><div className={`bb-chat-message ${m.role}`} key={i}><strong>{m.role==='user'?'나':'운영 도우미'}</strong><div>{m.text}</div>{m.source&&<small>{m.source}</small>}</div>)}{busy&&<p role="status">저장된 자료를 확인하고 답변하는 중…</p>}<div ref={end}/></div>{error&&<p role="alert">{error}</p>}<form onSubmit={send}><label htmlFor="bb-question">질문</label><textarea id="bb-question" maxLength={1000} value={question} onChange={e=>setQuestion(e.target.value)} placeholder="우유 언제 주문해야 해?" disabled={busy}/><button className="primary-btn" disabled={busy||!question.trim()} type="submit">{busy?'답변 중…':'질문 보내기'}</button><button className="secondary-btn" type="button" disabled={busy} onClick={()=>{setMessages([]);setError('');}}>대화 지우기</button></form><small>답변은 검토용이며 주문·재고 변경은 실행하지 않습니다.</small></section>}</div>;
+}
